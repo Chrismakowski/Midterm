@@ -1,0 +1,19 @@
+---
+title: "7:00 Section"
+output: html_document
+---
+Chris Makowski
+
+October 15, 2017
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Here is some arithmetic:
+
+```{r cars}
+x<-8
+y<-10
+x^2/y
+```
+
