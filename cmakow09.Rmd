@@ -1,0 +1,53 @@
+---
+title: "Untitled"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(sqldf)
+library(Lahman)
+library(ggplot2)
+```
+
+Column {data-width=650}
+-----------------------------------------------------------------------
+
+### Chart A
+
+```{r}
+query<-"SELECT yearID, W FROM Pitching
+WHERE playerID='carltst01'"
+
+result<-sqldf(query)
+
+ggplot()+
+  geom_line(data=result,aes(x=yearID,y=W))+
+  geom_point(data=result,aes(x=yearID,y=W))
+
+```
+
+Column {data-width=350}
+-----------------------------------------------------------------------
+
+### Chart B
+
+```{r}
+query<-"SELECT nameLast, sum(HR) AS career_HR 
+FROM Batting INNER Join Master
+ON Batting.playerID=Master.playerID
+WHERE teamID='PHI'
+Group BY nameLast
+HAVING sum(HR)>=250"
+
+result<-sqldf(query)
+
+ggplot()+
+  geom_bar(data=result,aes(x=nameLast,y=career_HR), stat='identity')
+  
+```
+
+
